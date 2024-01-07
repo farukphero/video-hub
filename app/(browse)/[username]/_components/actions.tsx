@@ -9,13 +9,11 @@ import { Button } from "@/components/ui/button";
 
 interface ActionsProps {
   isFollowing: boolean;
-  isBlocked: boolean;
   userId: string;
 };
 
 export const Actions = ({
   isFollowing,
-  isBlocked,
   userId,
 }: ActionsProps) => {
   const [isPending, startTransition] = useTransition();
@@ -46,20 +44,11 @@ export const Actions = ({
 
   const handleBlock = () => {
     startTransition(() => {
-      onBlock(userId)
-        .then((data) => toast.success(`blocked the user ${data.blocked.username}`))
-        .catch(() => toast.error("Something went wrong"));
-    });
-  };
-  const handleUnBlock = () => {
-    startTransition(() => {
       onUnblock(userId)
         .then((data) => toast.success(`Unblocked the user ${data.blocked.username}`))
         .catch(() => toast.error("Something went wrong"));
     });
   };
-
-console.log(isBlocked)
 
   return (
     <>
@@ -70,11 +59,9 @@ console.log(isBlocked)
     >
       {isFollowing ? "Unfollow" : "Follow"}
     </Button>
-    
     <Button onClick={handleBlock} disabled={isPending}>
-      Block
-    </Button>  
-    
+      Unblock
+    </Button>
     </>
   );
 };
