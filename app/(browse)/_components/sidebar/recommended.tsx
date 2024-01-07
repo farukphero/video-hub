@@ -7,17 +7,18 @@ import { useSidebar } from "@/store/use-sidebar";
 import { UserItem, UserItemSkeleton } from "./user-item";
 
 interface RecommendedProps {
-  data: User[];
+  data: (User & {
+    stream: { isLive: boolean } | null;
+  })[];
 };
-
 export const Recommended = ({
   data,
 }: RecommendedProps) => {
    
   const { collapsed } = useSidebar((state) => state);
-console.log(data)
+ 
   const showLabel = !collapsed && data.length > 0;
-console.log(showLabel)
+ 
   return (
     <div>
       {showLabel && (
@@ -33,7 +34,7 @@ console.log(showLabel)
             key={user.id}
             username={user.username}
             imageUrl={user.imageUrl}
-            // isLive={user.stream?.isLive}
+            isLive={user.stream?.isLive}
           />
         ))}
       </ul>
